@@ -1,27 +1,49 @@
 openapi: "3.0.0"
 info:
-  title: Greeting Service
+  title: Control Service
   version: 1.0.0
 paths:
-  /greeter/greet:
-    get:
-      summary: Greet a person
-      description: Greet a person by name
+  /control/start:
+    post:
+      summary: Start the service
+      description: Starts the trading service if it's not already running
       tags:
-        - greeting
-      parameters:
-        - name: name
-          in: query
-          description: Name of the person to greet
-          required: false
-          schema:
-            type: string
+        - control
       responses:
         '200':
-          description: Successful response
+          description: Service started successfully
           content:
             text/plain:
               schema:
                 type: string
-      deprecated: false
+                example: "Service started."
+        '400':
+          description: Service is already running
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "Service is already running."
+      security: []
+  /control/stop:
+    post:
+      summary: Stop the service
+      description: Stops the trading service if it's currently running
+      tags:
+        - control
+      responses:
+        '200':
+          description: Service stopped successfully
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "Service stopped."
+        '400':
+          description: Service is not running
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "Service is not running."
       security: []
